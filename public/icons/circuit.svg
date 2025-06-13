@@ -1,0 +1,41 @@
+<svg width="800" height="800" viewBox="0 0 800 800" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="#f49523" stroke-width="1" opacity="0.15">
+    <!-- Horizontal Lines -->
+    <path d="M0,100 L800,100" />
+    <path d="M0,200 L800,200" />
+    <path d="M0,300 L800,300" />
+    <path d="M0,400 L800,400" />
+    <path d="M0,500 L800,500" />
+    <path d="M0,600 L800,600" />
+    <path d="M0,700 L800,700" />
+    
+    <!-- Vertical Lines -->
+    <path d="M100,0 L100,800" />
+    <path d="M200,0 L200,800" />
+    <path d="M300,0 L300,800" />
+    <path d="M400,0 L400,800" />
+    <path d="M500,0 L500,800" />
+    <path d="M600,0 L600,800" />
+    <path d="M700,0 L700,800" />
+    
+    <!-- Circuits -->
+    <path d="M0,100 C50,100 50,200 100,200" />
+    <path d="M200,0 C200,50 300,50 300,100" />
+    <path d="M500,100 C550,100 550,200 600,200 C650,200 650,300 700,300" />
+    <path d="M100,400 C150,400 150,500 200,500 C250,500 250,600 300,600" />
+    <path d="M500,400 C550,400 550,500 600,500" />
+    <path d="M700,500 C700,550 600,550 600,600" />
+    <path d="M400,200 C400,250 500,250 500,300" />
+    <path d="M300,700 C350,700 350,600 400,600" />
+    
+    <!-- Nodes -->
+    <circle cx="100" cy="200" r="5" fill="#f49523" />
+    <circle cx="300" cy="100" r="5" fill="#f49523" />
+    <circle cx="700" cy="300" r="5" fill="#f49523" />
+    <circle cx="300" cy="600" r="5" fill="#f49523" />
+    <circle cx="600" cy="500" r="5" fill="#f49523" />
+    <circle cx="600" cy="600" r="5" fill="#f49523" />
+    <circle cx="500" cy="300" r="5" fill="#f49523" />
+    <circle cx="400" cy="600" r="5" fill="#f49523" />
+  </g>
+</svg> 

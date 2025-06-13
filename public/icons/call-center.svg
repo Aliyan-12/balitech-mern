@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="500" height="300" viewBox="0 0 500 300" fill="none">
+  <g opacity="0.6">
+    <!-- Central Server -->
+    <rect x="220" y="100" width="60" height="80" rx="5" fill="#0d1b38" stroke="#f49523" stroke-width="2" />
+    <rect x="230" y="110" width="40" height="10" rx="2" fill="#f49523" opacity="0.2" />
+    <rect x="230" y="125" width="40" height="10" rx="2" fill="#f49523" opacity="0.3" />
+    <rect x="230" y="140" width="40" height="10" rx="2" fill="#f49523" opacity="0.4" />
+    <rect x="230" y="155" width="40" height="10" rx="2" fill="#f49523" opacity="0.5" />
+    <circle cx="250" cy="180" r="5" fill="#f49523" />
+    
+    <!-- Workstations -->
+    <rect x="100" y="80" width="40" height="30" rx="3" fill="#0d1b38" stroke="#f49523" stroke-width="1" />
+    <rect x="105" y="85" width="30" height="20" rx="2" fill="#f49523" opacity="0.2" />
+    
+    <rect x="100" y="170" width="40" height="30" rx="3" fill="#0d1b38" stroke="#f49523" stroke-width="1" />
+    <rect x="105" y="175" width="30" height="20" rx="2" fill="#f49523" opacity="0.2" />
+    
+    <rect x="360" y="80" width="40" height="30" rx="3" fill="#0d1b38" stroke="#f49523" stroke-width="1" />
+    <rect x="365" y="85" width="30" height="20" rx="2" fill="#f49523" opacity="0.2" />
+    
+    <rect x="360" y="170" width="40" height="30" rx="3" fill="#0d1b38" stroke="#f49523" stroke-width="1" />
+    <rect x="365" y="175" width="30" height="20" rx="2" fill="#f49523" opacity="0.2" />
+    
+    <!-- Connection Lines -->
+    <path d="M140 95L220 140" stroke="#f49523" stroke-width="1" stroke-dasharray="5 3" />
+    <path d="M140 185L220 140" stroke="#f49523" stroke-width="1" stroke-dasharray="5 3" />
+    <path d="M360 95L280 140" stroke="#f49523" stroke-width="1" stroke-dasharray="5 3" />
+    <path d="M360 185L280 140" stroke="#f49523" stroke-width="1" stroke-dasharray="5 3" />
+    
+    <!-- Data Packets -->
+    <circle cx="170" y="110" r="3" fill="#f49523" />
+    <circle cx="200" y="130" r="3" fill="#f49523" />
+    <circle cx="170" y="170" r="3" fill="#f49523" />
+    <circle cx="330" y="110" r="3" fill="#f49523" />
+    <circle cx="300" y="130" r="3" fill="#f49523" />
+    <circle cx="330" y="170" r="3" fill="#f49523" />
+    
+    <!-- Headsets -->
+    <path d="M120 70C120 60 130 60 140 70" stroke="#f49523" stroke-width="1" />
+    <path d="M120 160C120 150 130 150 140 160" stroke="#f49523" stroke-width="1" />
+    <path d="M380 70C380 60 370 60 360 70" stroke="#f49523" stroke-width="1" />
+    <path d="M380 160C380 150 370 150 360 160" stroke="#f49523" stroke-width="1" />
+  </g>
+</svg> 

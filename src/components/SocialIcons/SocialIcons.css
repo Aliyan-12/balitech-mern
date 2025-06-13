@@ -1,0 +1,17 @@
+.social-icons {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.social-icons-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.social-icons-link:hover {
+  transform: translateY(-3px);
+} 

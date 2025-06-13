@@ -1,0 +1,30 @@
+<svg width="500" height="500" viewBox="0 0 500 500" xmlns="http://www.w3.org/2000/svg">
+  <g fill="none" stroke="#f49523" opacity="0.2">
+    <!-- Outer Circle -->
+    <circle cx="250" cy="250" r="200" stroke-width="1" stroke-dasharray="10 5" />
+    
+    <!-- Middle Circle -->
+    <circle cx="250" cy="250" r="150" stroke-width="1" stroke-dasharray="20 10" />
+    
+    <!-- Inner Circle -->
+    <circle cx="250" cy="250" r="100" stroke-width="1" stroke-dasharray="5 3" />
+    
+    <!-- Core Circle -->
+    <circle cx="250" cy="250" r="50" stroke-width="2" />
+    
+    <!-- Digital Dots around Outer Circle -->
+    <circle cx="250" cy="50" r="4" fill="#f49523" />
+    <circle cx="450" cy="250" r="4" fill="#f49523" />
+    <circle cx="250" cy="450" r="4" fill="#f49523" />
+    <circle cx="50" cy="250" r="4" fill="#f49523" />
+    
+    <!-- Connection Lines -->
+    <line x1="250" y1="50" x2="250" y2="150" stroke-width="1" stroke-dasharray="5 5" />
+    <line x1="450" y1="250" x2="350" y2="250" stroke-width="1" stroke-dasharray="5 5" />
+    <line x1="250" y1="450" x2="250" y2="350" stroke-width="1" stroke-dasharray="5 5" />
+    <line x1="50" y1="250" x2="150" y2="250" stroke-width="1" stroke-dasharray="5 5" />
+    
+    <!-- Digital Element -->
+    <path d="M180,250 L220,250 M250,180 L250,220 M280,250 L320,250 M250,280 L250,320" stroke-width="2" />
+  </g>
+</svg> 
