@@ -52,22 +52,22 @@ const Contact = () => {
     {
       icon: <IoLocationOutline size={24} />,
       title: "Our Location",
-      details: ["123 BPO Street, Denpasar", "Bali, Indonesia 80123"]
+      details: ["Office number 7, 1st floor, Maryam Business Center, Rawalpindi, 44300, Denpasar", "Bali, Indonesia 80123"]
     },
     {
       icon: <IoCallOutline size={24} />,
       title: "Phone Number",
-      details: ["+62 123 456 7890", "+62 987 654 3210"]
+      details: ["+92 3322173140"]
     },
     {
       icon: <IoMailOutline size={24} />,
       title: "Email Address",
-      details: ["info@balitech.com", "support@balitech.com"]
+      details: ["info@balitech.org"]
     },
     {
       icon: <IoTimeOutline size={24} />,
       title: "Working Hours",
-      details: ["24/7 Customer Support", "Office: Mon-Fri 9am-6pm"]
+      details: ["24/7 Customer Support", "Office: Mon-Fri 06:00pm-04:00am"]
     }
   ];
 
@@ -267,17 +267,7 @@ const Contact = () => {
                 ))}
               </div>
               
-              {/* Map or Additional Info */}
-              <div className="contact-map-container mt-8">
-                <div className="relative h-64 rounded-lg overflow-hidden">
-                  <div className="absolute inset-0 bg-navy-dark flex items-center justify-center border border-orange/20 map-placeholder">
-                    <div className="text-center">
-                      <span className="text-orange text-6xl block mb-2">📍</span>
-                      <span className="text-white/80">Bali, Indonesia</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            
             </div>
           </motion.div>
         </div>

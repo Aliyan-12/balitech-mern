@@ -218,11 +218,11 @@ const FAQ = () => {
               <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2 text-white/80">
                   <span className="w-6 text-orange">📞</span>
-                  <span>+62 123 456 7890</span>
+                  <span>+92 3322173140</span>
                 </div>
                 <div className="flex items-center gap-2 text-white/80">
                   <span className="w-6 text-orange">✉️</span>
-                  <span>support@balitech.com</span>
+                  <span>info@balitech.org</span>
                 </div>
               </div>
             </div>

@@ -20,7 +20,6 @@ function App() {
         <Services />
         <FAQ />
         <Contact />
-        {/* Add other sections as needed */}
       </main>
       <Footer />
     </div>

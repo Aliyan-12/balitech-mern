@@ -75,10 +75,10 @@ const Footer = () => {
           <div className="bg-navy/20 p-6 rounded-md border border-orange/10">
             <h3 className="text-lg font-semibold mb-4 text-white">Contact Us</h3>
             <address className="not-italic text-white/60 mb-4">
-              <p>123 BPO Street, Bali</p>
+              <p>Office number 7, 1st floor, Maryam Business Center, Rawalpindi, 44300, Bali</p>
               <p>Indonesia, 80123</p>
-              <p className="mt-4">Email: info@balitech.com</p>
-              <p>Phone: +62 123 456 7890</p>
+              <p className="mt-4">Email: info@balitech.org</p>
+              <p>Phone: +92 3322173140</p>
             </address>
             <Button 
               variant="primary"
@@ -92,14 +92,7 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 pt-6 text-center">
-          <Button 
-            variant="secondary"
-            href="#quote"
-            className="mx-auto mb-8 inline-block"
-            showIcon
-          >
-            Request a Free Quote
-          </Button>
+      
           <div className="border-t border-orange/10 pt-6 text-white/40">
             <p>&copy; {new Date().getFullYear()} BaliTech. All rights reserved.</p>
           </div>

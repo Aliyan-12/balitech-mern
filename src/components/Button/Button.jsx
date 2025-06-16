@@ -1,12 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { IoArrowForward } from 'react-icons/io5';
+import { Link } from 'react-router-dom';
 
 const Button = ({ 
   variant = 'primary', 
   children, 
   className = '', 
   href,
+  to,
   onClick,
   type = 'button',
   fullWidth = false,
@@ -53,6 +55,20 @@ const Button = ({
     </>
   );
   
+  // For internal routing
+  if (to) {
+    return (
+      <Link 
+        to={to} 
+        className={`${allClasses} group`}
+        {...props}
+      >
+        {content}
+      </Link>
+    );
+  }
+  
+  // For external links
   if (href) {
     return (
       <a 
@@ -83,6 +99,7 @@ Button.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   href: PropTypes.string,
+  to: PropTypes.string,
   onClick: PropTypes.func,
   type: PropTypes.string,
   fullWidth: PropTypes.bool,
