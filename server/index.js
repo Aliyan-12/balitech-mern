@@ -78,7 +78,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/balitech')
+mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://freefirestories212:sdTMpFJrdzIGoot9@cluster0.43ivyla.mongodb.net/')
   .then(() => {
     console.log('Connected to MongoDB');
     app.listen(PORT, () => {
