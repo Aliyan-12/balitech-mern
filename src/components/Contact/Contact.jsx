@@ -6,7 +6,8 @@ import {
   IoMailOutline, 
   IoTimeOutline,
   IoSendOutline,
-  IoCheckmarkCircleOutline
+  IoCheckmarkCircleOutline,
+  IoAlertCircleOutline
 } from 'react-icons/io5';
 import Button from '../Button/Button';
 import './Contact.css';
@@ -21,6 +22,8 @@ const Contact = () => {
   });
 
   const [formSubmitted, setFormSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,13 +33,27 @@ const Contact = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // In a real application, you would send the form data to a server here
-    console.log('Form submitted:', formState);
+    setSubmitting(true);
+    setError('');
     
-    // Simulate form submission success
-    setTimeout(() => {
+    try {
+      // Send contact form data to backend
+      const response = await fetch('/api/contacts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formState),
+        credentials: 'include', // Important for cookies
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || `Failed with status ${response.status}`);
+      }
+      
       setFormSubmitted(true);
       setFormState({
         name: '',
@@ -45,7 +62,12 @@ const Contact = () => {
         subject: '',
         message: '',
       });
-    }, 1000);
+    } catch (error) {
+      console.error('Error submitting contact form:', error);
+      setError('Failed to submit form. Please try again later.');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const contactInfo = [
@@ -207,7 +229,7 @@ const Contact = () => {
                     </div>
                   </div>
                   
-                  <div className="form-group mb-8">
+                  <div className="form-group mb-6">
                     <label htmlFor="message" className="form-label">Your Message</label>
                     <textarea
                       id="message"
@@ -221,13 +243,21 @@ const Contact = () => {
                     ></textarea>
                   </div>
                   
+                  {error && (
+                    <div className="mb-6 p-3 bg-red-900/20 border border-red-800 rounded-lg flex items-start gap-2">
+                      <IoAlertCircleOutline size={20} className="text-red-400 mt-0.5" />
+                      <p className="text-red-400 text-sm">{error}</p>
+                    </div>
+                  )}
+                  
                   <Button
                     variant="primary"
                     type="submit"
                     showIcon
                     icon={IoSendOutline}
+                    disabled={submitting}
                   >
-                    Send Message
+                    {submitting ? 'Sending...' : 'Send Message'}
                   </Button>
                 </form>
               )}
@@ -266,8 +296,6 @@ const Contact = () => {
                   </motion.div>
                 ))}
               </div>
-              
-            
             </div>
           </motion.div>
         </div>

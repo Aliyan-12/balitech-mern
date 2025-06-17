@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { getJobs, createJob, updateJob, deleteJob } from '../../utils/api';
 
 function JobPostManager() {
   const [jobs, setJobs] = useState([]);
@@ -24,8 +25,7 @@ function JobPostManager() {
 
   const fetchJobs = () => {
     setLoading(true);
-    fetch('/api/jobs')
-      .then(response => response.json())
+    getJobs()
       .then(data => {
         setJobs(data);
         setLoading(false);
@@ -85,7 +85,7 @@ function JobPostManager() {
     return '';
   };
 
-  const handleJobSubmit = (e) => {
+  const handleJobSubmit = async (e) => {
     e.preventDefault();
     
     // Validate form
@@ -102,55 +102,30 @@ function JobPostManager() {
       responsibilities: jobForm.responsibilities.filter(resp => resp.trim())
     };
     
-    if (editingJobId) {
-      // Update existing job
-      fetch(`/api/jobs/${editingJobId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
-        .then(response => {
-          if (!response.ok) throw new Error('Failed to update job');
-          fetchJobs();
-          resetForm();
-        })
-        .catch(error => {
-          setFormError('Error updating job: ' + error.message);
-        });
-    } else {
-      // Create new job
-      fetch('/api/jobs', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
-        .then(response => {
-          if (!response.ok) throw new Error('Failed to create job');
-          fetchJobs();
-          resetForm();
-        })
-        .catch(error => {
-          setFormError('Error creating job: ' + error.message);
-        });
+    try {
+      if (editingJobId) {
+        // Update existing job
+        await updateJob(editingJobId, formData);
+      } else {
+        // Create new job
+        await createJob(formData);
+      }
+      fetchJobs();
+      resetForm();
+    } catch (error) {
+      setFormError(`Error ${editingJobId ? 'updating' : 'creating'} job: ${error.message}`);
     }
   };
 
-  const handleDeleteJob = (jobId) => {
+  const handleDeleteJob = async (jobId) => {
     if (confirm('Are you sure you want to delete this job posting?')) {
-      fetch(`/api/jobs/${jobId}`, {
-        method: 'DELETE',
-      })
-        .then(response => {
-          if (!response.ok) throw new Error('Failed to delete job');
-          fetchJobs();
-        })
-        .catch(error => {
-          console.error('Error deleting job:', error);
-        });
+      try {
+        await deleteJob(jobId);
+        fetchJobs();
+      } catch (error) {
+        console.error('Error deleting job:', error);
+        alert(`Failed to delete job: ${error.message}`);
+      }
     }
   };
 

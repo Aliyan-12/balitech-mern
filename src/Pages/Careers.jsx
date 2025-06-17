@@ -143,7 +143,7 @@ function JobCard({ job }) {
   );
 }
 
-function ApplicationForm({ jobId = '', jobTitle = '' }) {
+function ApplicationForm({ jobId = '', jobTitle = '', onComplete = () => {} }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -156,6 +156,7 @@ function ApplicationForm({ jobId = '', jobTitle = '' }) {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -166,45 +167,88 @@ function ApplicationForm({ jobId = '', jobTitle = '' }) {
   };
 
   const handleFileChange = (e) => {
-    // In a real app, you would handle file upload to a server or cloud storage
-    // For now, we'll just store the file name
     const file = e.target.files[0];
     if (file) {
+      setSelectedFile(file);
+      // Just store the file name for now
       setFormData(prevState => ({
         ...prevState,
-        resumeUrl: file.name
+        resumeUrl: file.name // This will be replaced with the actual URL after upload
       }));
     }
   };
 
-  const handleSubmit = (e) => {
+  const uploadFileToCloudinary = async (file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    
+    try {
+      console.log('Starting file upload from frontend...', file.name, file.type);
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error('Upload response not OK:', response.status, errorData);
+        throw new Error(errorData.message || `Upload failed with status ${response.status}`);
+      }
+      
+      const data = await response.json();
+      console.log('File upload successful, received URL:', data.fileUrl);
+      return data.fileUrl; // Return the URL of the uploaded file
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      throw error;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     setError('');
-
-    // Send application data to backend
-    fetch('/api/applications', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData),
-    })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Failed to submit application');
+    
+    try {
+      // First upload the file if selected
+      let resumeUrl = formData.resumeUrl;
+      if (selectedFile) {
+        try {
+          resumeUrl = await uploadFileToCloudinary(selectedFile);
+        } catch (uploadError) {
+          setError(`File upload failed: ${uploadError.message}. Please try again.`);
+          setSubmitting(false);
+          return;
         }
-        return response.json();
-      })
-      .then(() => {
-        setSubmitted(true);
-        setSubmitting(false);
-      })
-      .catch(error => {
-        console.error('Error submitting application:', error);
-        setError('Failed to submit application. Please try again.');
-        setSubmitting(false);
+      }
+      
+      // Then submit the application with the file URL
+      const applicationData = {
+        ...formData,
+        resumeUrl
+      };
+      
+      const response = await fetch('/api/applications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(applicationData),
       });
+      
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || 'Failed to submit application');
+      }
+      
+      setSubmitted(true);
+      setSubmitting(false);
+      if (onComplete) onComplete();
+    } catch (error) {
+      console.error('Error submitting application:', error);
+      setError(`Failed to submit application: ${error.message}`);
+      setSubmitting(false);
+    }
   };
 
   if (submitted) {
@@ -219,7 +263,7 @@ function ApplicationForm({ jobId = '', jobTitle = '' }) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form encType='multipart/form-data' onSubmit={handleSubmit} className="space-y-4">
       {jobTitle && (
         <div className="mb-4 p-3 bg-blue-900/20 border border-blue-800 rounded-lg">
           <p className="text-blue-400">Applying for: {jobTitle}</p>
