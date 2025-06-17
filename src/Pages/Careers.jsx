@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { IoBriefcaseOutline, IoTimeOutline, IoLocationOutline, IoChevronDownOutline, IoChevronUpOutline } from 'react-icons/io5';
 
 function Careers() {
   const [jobs, setJobs] = useState([]);
@@ -20,7 +21,7 @@ function Careers() {
   }, []);
 
   return (
-    <div className="pt-28 pb-20">
+    <div className="pt-28 pb-20 bg-navy-dark">
       <div className="container mx-auto px-4">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -32,9 +33,19 @@ function Careers() {
           <p className="text-gray-300 max-w-2xl mx-auto text-lg">
             Explore opportunities to work with us and be part of building innovative solutions.
           </p>
+          
+          {/* Decorative elements */}
+          <div className="relative mt-12">
+            <div className="absolute left-1/2 -translate-x-1/2 -top-10 w-40 h-40 bg-orange/10 rounded-full blur-3xl"></div>
+            <img src="/icons/wave.svg" alt="" className="w-full max-w-md mx-auto opacity-10" />
+          </div>
         </motion.div>
 
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto relative">
+          {/* Background decorative elements */}
+          <div className="absolute -right-20 top-40 w-40 h-40 bg-orange/5 rounded-full blur-3xl -z-10"></div>
+          <div className="absolute -left-20 top-80 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -z-10"></div>
+          
           {loading ? (
             <div className="text-center py-20">
               <div className="w-16 h-16 border-4 border-orange border-t-transparent rounded-full animate-spin mx-auto"></div>
@@ -48,20 +59,29 @@ function Careers() {
             </div>
           ) : (
             <div className="text-center py-20">
+              <div className="w-24 h-24 bg-[#0f172a] rounded-full flex items-center justify-center mx-auto mb-6 border border-gray-700">
+                <IoBriefcaseOutline size={40} className="text-gray-400" />
+              </div>
               <h3 className="text-2xl text-gray-200 mb-4">No open positions at the moment</h3>
               <p className="text-gray-400">
-                Please check back later or send your resume for future opportunities.
+                Please check back later or submit your application for future opportunities.
               </p>
             </div>
           )}
 
-          <div className="mt-16 bg-[#0f172a] rounded-xl p-8 border border-gray-800">
-            <h2 className="text-2xl font-bold text-white mb-6">Don't see a role for you?</h2>
-            <p className="text-gray-300 mb-8">
-              We're always looking for talented individuals to join our team. 
-              Send us your resume and we'll keep you in mind for future opportunities.
-            </p>
-            <ApplicationForm />
+          <div className="mt-16 bg-[#0f172a] rounded-xl p-8 border border-gray-800 shadow-lg relative overflow-hidden">
+            {/* Decorative background */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-orange/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
+            <div className="absolute bottom-0 left-0 w-40 h-40 bg-blue-500/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
+            
+            <div className="relative">
+              <h2 className="text-2xl font-bold text-white mb-6">Don't see a role for you?</h2>
+              <p className="text-gray-300 mb-8">
+                We're always looking for talented individuals to join our team. 
+                Submit your application and we'll keep you in mind for future opportunities.
+              </p>
+              <ApplicationForm />
+            </div>
           </div>
         </div>
       </div>
@@ -76,31 +96,44 @@ function JobCard({ job }) {
   return (
     <motion.div 
       layout
-      className="bg-[#0f172a] rounded-xl overflow-hidden border border-gray-800"
+      className="bg-[#0f172a] rounded-xl overflow-hidden border border-gray-800 shadow-lg hover:shadow-[0_5px_30px_rgba(15,23,42,0.8)] transition-shadow"
     >
       <div className="p-6">
         <div className="flex justify-between items-start">
           <div>
             <h3 className="text-xl font-bold text-white">{job.title}</h3>
-            <div className="flex items-center mt-2 space-x-4">
-              <span className="text-sm bg-blue-900/30 text-blue-400 py-1 px-3 rounded-full">
-                {job.type}
+            <div className="flex flex-wrap items-center mt-2 gap-4">
+              <span className="text-sm flex items-center text-blue-400">
+                <IoBriefcaseOutline className="mr-1" /> {job.type}
               </span>
-              <span className="text-sm text-gray-400">{job.location}</span>
+              <span className="text-sm flex items-center text-gray-400">
+                <IoLocationOutline className="mr-1" /> {job.location}
+              </span>
+              {job.deadline && (
+                <span className="text-sm flex items-center text-orange">
+                  <IoTimeOutline className="mr-1" /> Deadline: {new Date(job.deadline).toLocaleDateString()}
+                </span>
+              )}
             </div>
           </div>
           <button
             onClick={() => setExpanded(!expanded)}
-            className="text-orange hover:text-orange/80 transition-colors"
+            className="flex items-center text-orange hover:text-orange/80 transition-colors"
           >
-            {expanded ? 'Hide Details' : 'View Details'}
+            {expanded ? (
+              <>Hide Details <IoChevronUpOutline className="ml-1" /></>
+            ) : (
+              <>View Details <IoChevronDownOutline className="ml-1" /></>
+            )}
           </button>
         </div>
 
         {expanded && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
             className="mt-6 border-t border-gray-800 pt-4"
           >
             <div className="prose prose-sm prose-invert max-w-none">
@@ -124,7 +157,7 @@ function JobCard({ job }) {
               <div className="mt-6">
                 <button
                   onClick={() => setApplying(true)}
-                  className="bg-orange hover:bg-orange/90 text-white py-2 px-6 rounded-lg transition-colors"
+                  className="bg-orange hover:bg-orange/90 text-white py-2 px-6 rounded-lg transition-colors shadow-[0_5px_15px_rgba(244,149,35,0.3)] hover:shadow-[0_8px_25px_rgba(244,149,35,0.5)]"
                 >
                   Apply for this position
                 </button>
@@ -148,6 +181,7 @@ function ApplicationForm({ jobId = '', jobTitle = '', onComplete = () => {} }) {
     name: '',
     email: '',
     phone: '',
+    bpoExperience: '',
     resumeUrl: '',
     coverLetter: '',
     jobId: jobId,
@@ -156,7 +190,6 @@ function ApplicationForm({ jobId = '', jobTitle = '', onComplete = () => {} }) {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
-  const [selectedFile, setSelectedFile] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -166,74 +199,18 @@ function ApplicationForm({ jobId = '', jobTitle = '', onComplete = () => {} }) {
     }));
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setSelectedFile(file);
-      // Just store the file name for now
-      setFormData(prevState => ({
-        ...prevState,
-        resumeUrl: file.name // This will be replaced with the actual URL after upload
-      }));
-    }
-  };
-
-  const uploadFileToCloudinary = async (file) => {
-    const formData = new FormData();
-    formData.append('file', file);
-    
-    try {
-      console.log('Starting file upload from frontend...', file.name, file.type);
-      const response = await fetch('/api/upload', {
-        method: 'POST',
-        body: formData
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        console.error('Upload response not OK:', response.status, errorData);
-        throw new Error(errorData.message || `Upload failed with status ${response.status}`);
-      }
-      
-      const data = await response.json();
-      console.log('File upload successful, received URL:', data.fileUrl);
-      return data.fileUrl; // Return the URL of the uploaded file
-    } catch (error) {
-      console.error('Error uploading file:', error);
-      throw error;
-    }
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     setError('');
     
     try {
-      // First upload the file if selected
-      let resumeUrl = formData.resumeUrl;
-      if (selectedFile) {
-        try {
-          resumeUrl = await uploadFileToCloudinary(selectedFile);
-        } catch (uploadError) {
-          setError(`File upload failed: ${uploadError.message}. Please try again.`);
-          setSubmitting(false);
-          return;
-        }
-      }
-      
-      // Then submit the application with the file URL
-      const applicationData = {
-        ...formData,
-        resumeUrl
-      };
-      
       const response = await fetch('/api/applications', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(applicationData),
+        body: JSON.stringify(formData),
       });
       
       if (!response.ok) {
@@ -253,81 +230,95 @@ function ApplicationForm({ jobId = '', jobTitle = '', onComplete = () => {} }) {
 
   if (submitted) {
     return (
-      <div className="text-center py-6 bg-green-900/20 border border-green-800 rounded-lg">
+      <motion.div 
+        initial={{ opacity: 0, scale: 0.95 }}
+        animate={{ opacity: 1, scale: 1 }}
+        className="text-center py-8 bg-green-900/20 border border-green-800 rounded-lg"
+      >
+        <div className="w-16 h-16 bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-4">
+          <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+          </svg>
+        </div>
         <h3 className="text-xl text-green-400 mb-2">Application Submitted!</h3>
         <p className="text-gray-300">
           Thank you for your interest. We'll review your application and get back to you soon.
         </p>
-      </div>
+      </motion.div>
     );
   }
 
   return (
-    <form encType='multipart/form-data' onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-6">
       {jobTitle && (
-        <div className="mb-4 p-3 bg-blue-900/20 border border-blue-800 rounded-lg">
-          <p className="text-blue-400">Applying for: {jobTitle}</p>
+        <div className="mb-4 p-4 bg-blue-900/20 border border-blue-800 rounded-lg">
+          <p className="text-blue-400 flex items-center">
+            <IoBriefcaseOutline className="mr-2" /> Applying for: {jobTitle}
+          </p>
         </div>
       )}
 
-      <div>
-        <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">
-          Full Name
-        </label>
-        <input
-          type="text"
-          id="name"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="w-full bg-[#1e293b] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-orange"
-        />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">
+            Full Name
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="w-full bg-[#1e293b] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-orange"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
+            Email
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            className="w-full bg-[#1e293b] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-orange"
+          />
+        </div>
       </div>
 
-      <div>
-        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">
-          Email
-        </label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          value={formData.email}
-          onChange={handleChange}
-          required
-          className="w-full bg-[#1e293b] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-orange"
-        />
-      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div>
+          <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1">
+            Phone
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            className="w-full bg-[#1e293b] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-orange"
+          />
+        </div>
 
-      <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-1">
-          Phone
-        </label>
-        <input
-          type="tel"
-          id="phone"
-          name="phone"
-          value={formData.phone}
-          onChange={handleChange}
-          className="w-full bg-[#1e293b] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-orange"
-        />
-      </div>
-
-      <div>
-        <label htmlFor="resume" className="block text-sm font-medium text-gray-300 mb-1">
-          Resume
-        </label>
-        <input
-          type="file"
-          id="resume"
-          name="resume"
-          accept=".pdf,.doc,.docx"
-          onChange={handleFileChange}
-          required
-          className="w-full bg-[#1e293b] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-orange file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:bg-orange file:text-white hover:file:bg-orange/90"
-        />
-        <p className="text-xs text-gray-400 mt-1">Accepted formats: PDF, DOC, DOCX</p>
+        <div>
+          <label htmlFor="bpoExperience" className="block text-sm font-medium text-gray-300 mb-1">
+            How much experience do you have in BPO?
+          </label>
+          <input
+            type="text"
+            id="bpoExperience"
+            name="bpoExperience"
+            value={formData.bpoExperience}
+            onChange={handleChange}
+            required
+            className="w-full bg-[#1e293b] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-orange"
+          />
+        </div>
       </div>
 
       <div>
@@ -341,11 +332,12 @@ function ApplicationForm({ jobId = '', jobTitle = '', onComplete = () => {} }) {
           onChange={handleChange}
           rows={4}
           className="w-full bg-[#1e293b] border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:ring-2 focus:ring-orange"
+          placeholder="Tell us why you're interested in working with us..."
         ></textarea>
       </div>
 
       {error && (
-        <div className="p-3 bg-red-900/20 border border-red-800 rounded-lg">
+        <div className="p-4 bg-red-900/20 border border-red-800 rounded-lg">
           <p className="text-red-400 text-sm">{error}</p>
         </div>
       )}
@@ -354,9 +346,16 @@ function ApplicationForm({ jobId = '', jobTitle = '', onComplete = () => {} }) {
         <button
           type="submit"
           disabled={submitting}
-          className="w-full bg-orange hover:bg-orange/90 disabled:bg-orange/50 text-white font-medium py-2 px-4 rounded-lg transition-colors"
+          className="w-full bg-orange hover:bg-orange/90 disabled:bg-orange/50 text-white font-medium py-3 px-6 rounded-lg transition-colors shadow-[0_5px_15px_rgba(244,149,35,0.3)] hover:shadow-[0_8px_25px_rgba(244,149,35,0.5)]"
         >
-          {submitting ? 'Submitting...' : 'Submit Application'}
+          {submitting ? (
+            <span className="flex items-center justify-center">
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2"></div>
+              Submitting...
+            </span>
+          ) : (
+            'Submit Application'
+          )}
         </button>
       </div>
     </form>

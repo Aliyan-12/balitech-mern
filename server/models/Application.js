@@ -16,9 +16,14 @@ const ApplicationSchema = new mongoose.Schema({
     type: String,
     trim: true
   },
+  bpoExperience: {
+    type: String,
+    trim: true,
+    required: true
+  },
   resumeUrl: {
     type: String,
-    required: true
+    required: false
   },
   coverLetter: {
     type: String,
@@ -57,4 +62,5 @@ ApplicationSchema.pre('save', function(next) {
   next();
 });
 
-export default mongoose.model('Application', ApplicationSchema); 
+const Application = mongoose.model('Application', ApplicationSchema);
+export default Application; 

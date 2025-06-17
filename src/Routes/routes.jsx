@@ -7,6 +7,8 @@ import About from '../components/About/About';
 import Services from '../components/Services/Services';
 import Careers from '../Pages/Careers';
 import Dashboard from '../Pages/Admin/Dashboard';
+import Login from '../Pages/Admin/Login';
+import ProtectedRoute from '../components/ProtectedRoute';
 // import Pricing from '../components/Pricing/Pricing';
 // import WhyUs from '../components/WhyUs/WhyUS';
 
@@ -36,8 +38,12 @@ const router = createBrowserRouter([
     element: <MainLayout><Careers /></MainLayout>,
   },
   {
+    path: '/admin/login',
+    element: <Login />,
+  },
+  {
     path: '/admin',
-    element: <Dashboard />,
+    element: <ProtectedRoute><Dashboard /></ProtectedRoute>,
   }
 ]);
 

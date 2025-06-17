@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { IoDocumentTextOutline, IoDownloadOutline, IoOpenOutline } from 'react-icons/io5';
 
 function ApplicationManager() {
   const [applications, setApplications] = useState([]);
@@ -106,45 +105,6 @@ function ApplicationManager() {
         return 'bg-red-900/30 text-red-400';
       default:
         return 'bg-gray-900/30 text-gray-400';
-    }
-  };
-
-  // Function to check if URL is a Cloudinary URL
-  const isCloudinaryUrl = (url) => {
-    return url && typeof url === 'string' && (
-      url.includes('cloudinary.com') || url.includes('res.cloudinary.com')
-    );
-  };
-
-  // Function to handle opening resume
-  const handleResumeClick = (url, action) => {
-    if (!url) return;
-    
-    try {
-      // For download action
-      if (action === 'download') {
-        // Get filename from URL or use default
-        let filename = url.split('/').pop();
-        if (!filename || filename.indexOf('.') === -1) {
-          filename = `resume-${selectedApplication.name.replace(/\s+/g, '-').toLowerCase()}.pdf`;
-        }
-        
-        // Create a temporary anchor element
-        const link = document.createElement('a');
-        link.href = url;
-        link.target = '_blank';
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      } 
-      // For view action
-      else {
-        window.open(url, '_blank', 'noopener,noreferrer');
-      }
-    } catch (error) {
-      console.error("Error handling resume action:", error);
-      alert("There was an issue with this document. It may be corrupted or the URL is invalid.");
     }
   };
 
@@ -257,32 +217,8 @@ function ApplicationManager() {
                 </div>
 
                 <div>
-                  <h5 className="text-sm text-gray-400">Resume</h5>
-                  <div className="mt-1 flex flex-wrap gap-2">
-                    {isCloudinaryUrl(selectedApplication.resumeUrl) ? (
-                      <>
-                        <button
-                          onClick={() => handleResumeClick(selectedApplication.resumeUrl, 'view')}
-                          className="inline-flex items-center px-3 py-1.5 bg-blue-900/20 text-blue-400 rounded-lg hover:bg-blue-900/40"
-                        >
-                          <IoOpenOutline className="mr-1" /> View Resume
-                        </button>
-                        <button
-                          onClick={() => handleResumeClick(selectedApplication.resumeUrl, 'download')}
-                          className="inline-flex items-center px-3 py-1.5 bg-green-900/20 text-green-400 rounded-lg hover:bg-green-900/40"
-                        >
-                          <IoDownloadOutline className="mr-1" /> Download
-                        </button>
-                      </>
-                    ) : selectedApplication.resumeUrl ? (
-                      <div className="flex items-center text-gray-400">
-                        <IoDocumentTextOutline className="mr-2" />
-                        <span>Resume filename: {selectedApplication.resumeUrl}</span>
-                      </div>
-                    ) : (
-                      <span className="text-gray-400">No resume provided</span>
-                    )}
-                  </div>
+                  <h5 className="text-sm text-gray-400">BPO Experience</h5>
+                  <p className="text-white">{selectedApplication.bpoExperience || 'Not specified'}</p>
                 </div>
 
                 {selectedApplication.coverLetter && (
