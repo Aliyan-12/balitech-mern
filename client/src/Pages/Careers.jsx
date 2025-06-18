@@ -8,7 +8,8 @@ function Careers() {
 
   useEffect(() => {
     // Fetch job listings from backend
-    fetch('/api/jobs')
+    console.log(`/api/jobs`);
+    fetch(`/api/jobs`)
       .then(response => response.json())
       .then(data => {
         setJobs(data);
@@ -33,7 +34,7 @@ function Careers() {
           <p className="text-gray-300 max-w-2xl mx-auto text-lg">
             Explore opportunities to work with us and be part of building innovative solutions.
           </p>
-          
+
           {/* Decorative elements */}
           <div className="relative mt-12">
             <div className="absolute left-1/2 -translate-x-1/2 -top-10 w-40 h-40 bg-orange/10 rounded-full blur-3xl"></div>
@@ -45,7 +46,7 @@ function Careers() {
           {/* Background decorative elements */}
           <div className="absolute -right-20 top-40 w-40 h-40 bg-orange/5 rounded-full blur-3xl -z-10"></div>
           <div className="absolute -left-20 top-80 w-64 h-64 bg-blue-500/5 rounded-full blur-3xl -z-10"></div>
-          
+
           {loading ? (
             <div className="text-center py-20">
               <div className="w-16 h-16 border-4 border-orange border-t-transparent rounded-full animate-spin mx-auto"></div>
@@ -73,11 +74,11 @@ function Careers() {
             {/* Decorative background */}
             <div className="absolute top-0 right-0 w-64 h-64 bg-orange/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-40 h-40 bg-blue-500/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
-            
+
             <div className="relative">
               <h2 className="text-2xl font-bold text-white mb-6">Don't see a role for you?</h2>
               <p className="text-gray-300 mb-8">
-                We're always looking for talented individuals to join our team. 
+                We're always looking for talented individuals to join our team.
                 Submit your application and we'll keep you in mind for future opportunities.
               </p>
               <ApplicationForm />
@@ -94,7 +95,7 @@ function JobCard({ job }) {
   const [applying, setApplying] = useState(false);
 
   return (
-    <motion.div 
+    <motion.div
       layout
       className="bg-[#0f172a] rounded-xl overflow-hidden border border-gray-800 shadow-lg hover:shadow-[0_5px_30px_rgba(15,23,42,0.8)] transition-shadow"
     >
@@ -139,7 +140,7 @@ function JobCard({ job }) {
             <div className="prose prose-sm prose-invert max-w-none">
               <h4 className="text-lg font-medium text-white">Description</h4>
               <p className="text-gray-300">{job.description}</p>
-              
+
               <h4 className="text-lg font-medium text-white mt-4">Requirements</h4>
               <ul className="list-disc pl-5 text-gray-300">
                 {job.requirements.map((req, index) => (
@@ -176,7 +177,7 @@ function JobCard({ job }) {
   );
 }
 
-function ApplicationForm({ jobId = '', jobTitle = '', onComplete = () => {} }) {
+function ApplicationForm({ jobId = '', jobTitle = '', onComplete = () => { } }) {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -203,21 +204,21 @@ function ApplicationForm({ jobId = '', jobTitle = '', onComplete = () => {} }) {
     e.preventDefault();
     setSubmitting(true);
     setError('');
-    
+
     try {
-      const response = await fetch('/api/applications', {
+      const response = await fetch(`/api/applications`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || 'Failed to submit application');
       }
-      
+
       setSubmitted(true);
       setSubmitting(false);
       if (onComplete) onComplete();
@@ -230,7 +231,7 @@ function ApplicationForm({ jobId = '', jobTitle = '', onComplete = () => {} }) {
 
   if (submitted) {
     return (
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         className="text-center py-8 bg-green-900/20 border border-green-800 rounded-lg"

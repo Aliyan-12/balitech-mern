@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { 
-  IoLocationOutline, 
-  IoCallOutline, 
-  IoMailOutline, 
+import {
+  IoLocationOutline,
+  IoCallOutline,
+  IoMailOutline,
   IoTimeOutline,
   IoSendOutline,
   IoCheckmarkCircleOutline,
@@ -37,10 +37,10 @@ const Contact = () => {
     e.preventDefault();
     setSubmitting(true);
     setError('');
-    
+
     try {
       // Send contact form data to backend
-      const response = await fetch('/api/contacts', {
+      const response = await fetch(`/api/contacts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -48,12 +48,12 @@ const Contact = () => {
         body: JSON.stringify(formState),
         credentials: 'include', // Important for cookies
       });
-      
+
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
         throw new Error(errorData.message || `Failed with status ${response.status}`);
       }
-      
+
       setFormSubmitted(true);
       setFormState({
         name: '',
@@ -111,7 +111,7 @@ const Contact = () => {
           >
             Get In Touch
           </motion.div>
-          
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -121,15 +121,15 @@ const Contact = () => {
           >
             Contact <span className="contact-gradient-text">Us</span>
           </motion.h2>
-          
-          <motion.div 
+
+          <motion.div
             className="w-24 h-1 bg-orange mx-auto mb-6"
             initial={{ width: 0 }}
             whileInView={{ width: 96 }}
             transition={{ duration: 0.8 }}
             viewport={{ once: true }}
           ></motion.div>
-          
+
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
@@ -153,7 +153,7 @@ const Contact = () => {
           >
             <div className="contact-form-inner">
               <h3 className="text-2xl font-semibold mb-6">Send Us a Message</h3>
-              
+
               {formSubmitted ? (
                 <div className="form-success">
                   <div className="success-icon">
@@ -163,7 +163,7 @@ const Contact = () => {
                   <p className="text-white/80">
                     Your message has been sent successfully. We'll get back to you as soon as possible.
                   </p>
-                  <button 
+                  <button
                     className="mt-6 text-orange hover:underline"
                     onClick={() => setFormSubmitted(false)}
                   >
@@ -200,7 +200,7 @@ const Contact = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                     <div className="form-group">
                       <label htmlFor="phone" className="form-label">Phone Number</label>
@@ -228,7 +228,7 @@ const Contact = () => {
                       />
                     </div>
                   </div>
-                  
+
                   <div className="form-group mb-6">
                     <label htmlFor="message" className="form-label">Your Message</label>
                     <textarea
@@ -242,14 +242,14 @@ const Contact = () => {
                       required
                     ></textarea>
                   </div>
-                  
+
                   {error && (
                     <div className="mb-6 p-3 bg-red-900/20 border border-red-800 rounded-lg flex items-start gap-2">
                       <IoAlertCircleOutline size={20} className="text-red-400 mt-0.5" />
                       <p className="text-red-400 text-sm">{error}</p>
                     </div>
                   )}
-                  
+
                   <Button
                     variant="primary"
                     type="submit"
@@ -263,7 +263,7 @@ const Contact = () => {
               )}
             </div>
           </motion.div>
-          
+
           {/* Contact Information */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
@@ -273,7 +273,7 @@ const Contact = () => {
           >
             <div className="contact-info-container">
               <h3 className="text-2xl font-semibold mb-8">Contact Information</h3>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {contactInfo.map((info, index) => (
                   <motion.div

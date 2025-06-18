@@ -13,7 +13,7 @@ function ApplicationManager() {
 
   const fetchApplications = () => {
     setLoading(true);
-    fetch('/api/applications')
+    fetch(`/api/applications`)
       .then(response => response.json())
       .then(data => {
         setApplications(data);
@@ -66,7 +66,7 @@ function ApplicationManager() {
       if (statusFilter !== 'all' && app.status !== statusFilter) {
         return false;
       }
-      
+
       // Filter by search query
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
@@ -76,15 +76,15 @@ function ApplicationManager() {
           app.jobTitle?.toLowerCase().includes(query)
         );
       }
-      
+
       return true;
     });
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short', 
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
@@ -111,7 +111,7 @@ function ApplicationManager() {
   return (
     <div>
       <h3 className="text-xl font-medium text-white mb-6">Job Applications</h3>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Applications List */}
         <div className={`${selectedApplication ? 'lg:col-span-7' : 'lg:col-span-12'}`}>
@@ -149,14 +149,13 @@ function ApplicationManager() {
           ) : filteredApplications.length > 0 ? (
             <div className="space-y-4">
               {filteredApplications.map(application => (
-                <div 
+                <div
                   key={application._id}
                   onClick={() => setSelectedApplication(application)}
-                  className={`p-4 rounded-xl border cursor-pointer transition-colors ${
-                    selectedApplication && selectedApplication._id === application._id
-                      ? 'bg-[#1e293b] border-orange'
-                      : 'bg-[#1e293b] border-gray-800 hover:border-gray-600'
-                  }`}
+                  className={`p-4 rounded-xl border cursor-pointer transition-colors ${selectedApplication && selectedApplication._id === application._id
+                    ? 'bg-[#1e293b] border-orange'
+                    : 'bg-[#1e293b] border-gray-800 hover:border-gray-600'
+                    }`}
                 >
                   <div className="flex justify-between items-start">
                     <div>

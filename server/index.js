@@ -21,7 +21,7 @@ const __dirname = path.dirname(__filename);
 
 // Middleware
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' ? 'https://yourdomain.com' : 'http://localhost:5173',
+  origin: process.env.CLIENT_URI ?? 'http://localhost:5173/',
   credentials: true
 }));
 app.use(cookieParser()); // Required for CSRF
@@ -32,8 +32,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(helmet()); // Set secure HTTP headers
 
 // Static files
-app.use(express.static(path.join(__dirname, '../dist')));
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
+app.use(express.static(path.join(__dirname, 'index.html')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // CSRF Token endpoint - excluded from CSRF protection
 app.get('/api/csrf-token', csrfProtection, (req, res) => {
@@ -44,6 +44,11 @@ app.get('/api/csrf-token', csrfProtection, (req, res) => {
 app.use('/api/jobs', jobRoutes);
 app.use('/api/applications', applicationRoutes);
 app.use('/api/contacts', contactRoutes);
+
+app.use('/', () => {
+  console.log(`Welcome to BT`);
+});
+
 
 // Error handler for CSRF errors
 app.use(handleCsrfError);
@@ -60,20 +65,23 @@ app.use((err, req, res, next) => {
 // Serve frontend in production
 if (process.env.NODE_ENV === 'production') {
   app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../dist/index.html'));
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
   });
 }
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://freefirestories212:sdTMpFJrdzIGoot9@cluster0.43ivyla.mongodb.net/')
-  .then(() => {
-    console.log('Connected to MongoDB');
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
+if (process.env.MONGODB_URI) {
+  mongoose.connect(process.env.MONGODB_URI)
+    .then(() => {
+      console.log('Connected to MongoDB');
+      app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+      });
+    })
+    .catch(err => {
+      console.error('Failed to connect to MongoDB:', err);
     });
-  })
-  .catch(err => {
-    console.error('Failed to connect to MongoDB:', err);
-  });
-
+} else {
+  console.error('MONGODB_URI is not set in the environment variables');
+}
 export default app; 

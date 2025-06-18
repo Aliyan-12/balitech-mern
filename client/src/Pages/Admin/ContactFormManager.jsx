@@ -13,7 +13,7 @@ function ContactFormManager() {
 
   const fetchContacts = () => {
     setLoading(true);
-    fetch('/api/contacts')
+    fetch(`/api/contacts`)
       .then(response => response.json())
       .then(data => {
         setContacts(data);
@@ -66,7 +66,7 @@ function ContactFormManager() {
       if (statusFilter !== 'all' && contact.status !== statusFilter) {
         return false;
       }
-      
+
       // Filter by search query
       if (searchQuery) {
         const query = searchQuery.toLowerCase();
@@ -76,15 +76,15 @@ function ContactFormManager() {
           contact.subject?.toLowerCase().includes(query)
         );
       }
-      
+
       return true;
     });
 
   const formatDate = (dateString) => {
     const date = new Date(dateString);
-    return date.toLocaleDateString('en-US', { 
-      year: 'numeric', 
-      month: 'short', 
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
       day: 'numeric',
       hour: '2-digit',
       minute: '2-digit'
@@ -109,7 +109,7 @@ function ContactFormManager() {
   return (
     <div>
       <h3 className="text-xl font-medium text-white mb-6">Contact Form Submissions</h3>
-      
+
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Contacts List */}
         <div className={`${selectedContact ? 'lg:col-span-7' : 'lg:col-span-12'}`}>
@@ -146,14 +146,13 @@ function ContactFormManager() {
           ) : filteredContacts.length > 0 ? (
             <div className="space-y-4">
               {filteredContacts.map(contact => (
-                <div 
+                <div
                   key={contact._id}
                   onClick={() => setSelectedContact(contact)}
-                  className={`p-4 rounded-xl border cursor-pointer transition-colors ${
-                    selectedContact && selectedContact._id === contact._id
-                      ? 'bg-[#1e293b] border-orange'
-                      : 'bg-[#1e293b] border-gray-800 hover:border-gray-600'
-                  }`}
+                  className={`p-4 rounded-xl border cursor-pointer transition-colors ${selectedContact && selectedContact._id === contact._id
+                    ? 'bg-[#1e293b] border-orange'
+                    : 'bg-[#1e293b] border-gray-800 hover:border-gray-600'
+                    }`}
                 >
                   <div className="flex justify-between items-start">
                     <div>
