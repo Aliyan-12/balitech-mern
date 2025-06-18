@@ -53,8 +53,12 @@ app.get('/api/admin/protected', adminAuth, (req, res) => {
   res.json({ message: 'This is protected', admin: req.admin });
 });
 
-app.use('/', () => {
+app.use('/', (req, res) => {
   console.log(`Welcome to BT`);
+  res.json({
+    'success': true,
+    'message': 'Server is running.....',
+  });
 });
 
 
