@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utils/AuthContext';
 import { motion } from 'framer-motion';
@@ -10,27 +10,30 @@ function Login() {
   const [error, setError] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  
-  const navigate = useNavigate();
-  const { login } = useAuth();
 
-  const handleSubmit = (e) => {
+  const navigate = useNavigate();
+  const { login, isAuthenticated, loading: authLoading } = useAuth();
+
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      navigate('/admin', { replace: true });
+    }
+  }, [isAuthenticated, authLoading, navigate]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    
-    // Simple validation
+
     if (!username || !password) {
       setError('Please enter both username and password');
       setLoading(false);
       return;
     }
-    
-    // Try to login
-    const success = login(username, password);
-    
+
+    const success = await login(username, password);
     if (success) {
-      navigate('/admin');
+      navigate('/admin', { replace: true });
     } else {
       setError('Invalid username or password');
       setLoading(false);
@@ -39,7 +42,7 @@ function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-navy-dark py-12 px-4 sm:px-6 lg:px-8">
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
@@ -56,7 +59,7 @@ function Login() {
             Enter your credentials to access the admin area
           </p>
         </div>
-        
+
         <div className="mt-8 bg-[#0f172a] rounded-xl p-8 shadow-lg border border-gray-800">
           <form className="space-y-6" onSubmit={handleSubmit}>
             {error && (
@@ -64,7 +67,7 @@ function Login() {
                 <p className="text-red-400 text-sm text-center">{error}</p>
               </div>
             )}
-            
+
             <div>
               <label htmlFor="username" className="block text-sm font-medium text-gray-300 mb-1">
                 Username
@@ -84,7 +87,7 @@ function Login() {
                 />
               </div>
             </div>
-            
+
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-gray-300 mb-1">
                 Password
@@ -113,7 +116,7 @@ function Login() {
                 </div>
               </div>
             </div>
-            
+
             <div>
               <button
                 type="submit"
@@ -130,7 +133,7 @@ function Login() {
                 )}
               </button>
             </div>
-            
+
             <div className="text-center mt-4">
               <a href="/" className="text-orange hover:text-orange/80 text-sm">
                 Return to homepage
@@ -138,7 +141,7 @@ function Login() {
             </div>
           </form>
         </div>
-        
+
         <div className="text-center text-xs text-gray-500 mt-8">
           <p>© {new Date().getFullYear()} BaliTech. All rights reserved.</p>
         </div>

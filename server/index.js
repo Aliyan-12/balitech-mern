@@ -11,6 +11,8 @@ import helmet from 'helmet';
 import jobRoutes from './routes/jobs.js';
 import applicationRoutes from './routes/applications.js';
 import contactRoutes from './routes/contacts.js';
+import adminRoutes from './routes/admin.js';
+import { adminAuth } from './middleware/adminAuth.js';
 
 // Initialize app
 dotenv.config();
@@ -44,6 +46,12 @@ app.get('/api/csrf-token', csrfProtection, (req, res) => {
 app.use('/api/jobs', jobRoutes);
 app.use('/api/applications', applicationRoutes);
 app.use('/api/contacts', contactRoutes);
+app.use('/api/admin', adminRoutes);
+
+// Example protected route
+app.get('/api/admin/protected', adminAuth, (req, res) => {
+  res.json({ message: 'This is protected', admin: req.admin });
+});
 
 app.use('/', () => {
   console.log(`Welcome to BT`);

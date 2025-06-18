@@ -6,6 +6,7 @@ import JobPostManager from './JobPostManager';
 import ApplicationManager from './ApplicationManager';
 import ContactFormManager from './ContactFormManager';
 import { useAuth } from '../../utils/AuthContext';
+import ProtectedRoute from '../../components/ProtectedRoute';
 
 function Dashboard() {
   const [activeSection, setActiveSection] = useState('jobPosts');
@@ -65,11 +66,10 @@ function Dashboard() {
                       setActiveSection(item.id);
                       setSidebarOpen(false);
                     }}
-                    className={`w-full flex items-center px-4 py-3 rounded-lg transition-colors ${
-                      activeSection === item.id
+                    className={`w-full flex items-center px-4 py-3 rounded-lg transition-colors ${activeSection === item.id
                         ? 'bg-orange text-white'
                         : 'text-gray-300 hover:bg-gray-800'
-                    }`}
+                      }`}
                   >
                     <item.icon className="mr-3" size={20} />
                     {item.label}
@@ -87,11 +87,10 @@ function Dashboard() {
               <button
                 key={item.id}
                 onClick={() => setActiveSection(item.id)}
-                className={`w-full flex items-center px-4 py-3 rounded-lg transition-colors ${
-                  activeSection === item.id
+                className={`w-full flex items-center px-4 py-3 rounded-lg transition-colors ${activeSection === item.id
                     ? 'bg-orange text-white shadow-[0_0_10px_rgba(244,149,35,0.3)]'
                     : 'text-gray-300 hover:bg-gray-800'
-                }`}
+                  }`}
               >
                 <item.icon className="mr-3" size={20} />
                 {item.label}

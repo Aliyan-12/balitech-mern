@@ -1,33 +1,42 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is already authenticated via localStorage
-    const token = localStorage.getItem('adminToken');
-    if (token) {
-      setIsAuthenticated(true);
-    }
-    setLoading(false);
+    fetch('/api/admin/me', { credentials: 'include' })
+      .then(res => res.json())
+      .then(data => {
+        setIsAuthenticated(data.loggedIn);
+        setLoading(false);
+      })
+      .catch(() => {
+        setIsAuthenticated(false);
+        setLoading(false);
+      });
   }, []);
 
-  const login = (username, password) => {
-    // For demonstration, using hardcoded credentials
-    // In production, this should be replaced with a proper backend authentication
-    if (username === 'admin' && password === 'balitech2023') {
-      localStorage.setItem('adminToken', 'demo-token-value');
+  const login = async (username, password) => {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
+      body: JSON.stringify({ username, password })
+    });
+    if (res.ok) {
       setIsAuthenticated(true);
       return true;
+    } else {
+      setIsAuthenticated(false);
+      return false;
     }
-    return false;
   };
 
-  const logout = () => {
-    localStorage.removeItem('adminToken');
+  const logout = async () => {
+    await fetch('/api/admin/logout', { credentials: 'include' });
     setIsAuthenticated(false);
   };
 
@@ -36,8 +45,10 @@ export const AuthProvider = ({ children }) => {
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => useContext(AuthContext);
+export function useAuth() {
+  return useContext(AuthContext);
+}
 
 export default AuthContext; 
