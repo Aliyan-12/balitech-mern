@@ -5,7 +5,8 @@
     "type": "module",
     "scripts": {
         "server": "npm run dev",
-        "dev": "nodemon index.js"
+        "dev": "nodemon index.js",
+        "prod": "node index.js"
     },
     "dependencies": {
         "cloudinary": "^2.6.1",
