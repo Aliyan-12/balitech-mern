@@ -8,8 +8,8 @@ function Careers() {
 
   useEffect(() => {
     // Fetch job listings from backend
-    console.log(`/api/jobs`);
-    fetch(`/api/jobs`)
+    console.log(`${import.meta.env.VITE_API_URL}/api/jobs`);
+    fetch(`${import.meta.env.VITE_API_URL}/api/jobs`)
       .then(response => response.json())
       .then(data => {
         setJobs(data);
