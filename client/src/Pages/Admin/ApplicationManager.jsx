@@ -13,7 +13,7 @@ function ApplicationManager() {
 
   const fetchApplications = () => {
     setLoading(true);
-    fetch(`${import.meta.env.VITE_APP_SERVER_URI}/api/applications`)
+    fetch(`/api/applications`)
       .then(response => response.json())
       .then(data => {
         setApplications(data);
@@ -26,7 +26,7 @@ function ApplicationManager() {
   };
 
   const handleStatusChange = (applicationId, newStatus) => {
-    fetch(`${import.meta.env.VITE_APP_SERVER_URI}/api/applications/${applicationId}/status`, {
+    fetch(`/api/applications/${applicationId}/status`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ function ApplicationManager() {
 
   const handleDeleteApplication = (applicationId) => {
     if (confirm('Are you sure you want to delete this application?')) {
-      fetch(`${import.meta.env.VITE_APP_SERVER_URI}/api/applications/${applicationId}`, {
+      fetch(`/api/applications/${applicationId}`, {
         method: 'DELETE',
       })
         .then(response => {

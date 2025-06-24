@@ -20,7 +20,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   const login = async (username, password) => {
-    const res = await fetch(`${import.meta.env.VITE_APP_SERVER_URI}/api/admin/login`, {
+    const res = await fetch('/api/admin/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       credentials: 'include',

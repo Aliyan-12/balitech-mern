@@ -40,7 +40,7 @@ const Contact = () => {
 
     try {
       // Send contact form data to backend
-      const response = await fetch(`${import.meta.env.VITE_APP_SERVER_URI}/api/contacts`, {
+      const response = await fetch(`/api/contacts`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ const fetchCsrfToken = async () => {
   if (csrfToken) return csrfToken;
   
   try {
-    const response = await fetch(`${import.meta.env.VITE_APP_SERVER_URI}/api/csrf-token`, {
+    const response = await fetch('/api/csrf-token', {
       credentials: 'include' // Important for cookies
     });
     
@@ -46,7 +46,7 @@ const apiRequest = async (url, method = 'GET', data = null) => {
       options.body = JSON.stringify(data);
     }
     
-    const response = await fetch(`${import.meta.env.VITE_APP_SERVER_URI}${url}`, options);
+    const response = await fetch(url, options);
     
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
@@ -84,7 +84,7 @@ export const uploadFile = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
     
-    const response = await fetch(`${import.meta.env.VITE_APP_SERVER_URI}/api/upload`, {
+    const response = await fetch('/api/upload', {
       method: 'POST',
       credentials: 'include',
       body: formData,
