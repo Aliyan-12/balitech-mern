@@ -13,7 +13,7 @@ function ContactFormManager() {
 
   const fetchContacts = () => {
     setLoading(true);
-    fetch(`/api/contacts`)
+    fetch(`${import.meta.env.VITE_APP_SERVER_URI}/api/contacts`)
       .then(response => response.json())
       .then(data => {
         setContacts(data);
@@ -26,7 +26,7 @@ function ContactFormManager() {
   };
 
   const handleStatusChange = (contactId, newStatus) => {
-    fetch(`/api/contacts/${contactId}/status`, {
+    fetch(`${import.meta.env.VITE_APP_SERVER_URI}/api/contacts/${contactId}/status`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
@@ -44,7 +44,7 @@ function ContactFormManager() {
 
   const handleDeleteContact = (contactId) => {
     if (confirm('Are you sure you want to delete this contact submission?')) {
-      fetch(`/api/contacts/${contactId}`, {
+      fetch(`${import.meta.env.VITE_APP_SERVER_URI}/api/contacts/${contactId}`, {
         method: 'DELETE',
       })
         .then(response => {

@@ -8,8 +8,8 @@ function Careers() {
 
   useEffect(() => {
     // Fetch job listings from backend
-    console.log(`${import.meta.env.VITE_API_URL}/api/jobs`);
-    fetch(`${import.meta.env.VITE_API_URL}/api/jobs`)
+    console.log(`${import.meta.env.VITE_APP_SERVER_URI}/api/jobs`);
+    fetch(`${import.meta.env.VITE_APP_SERVER_URI}/api/jobs`)
       .then(response => response.json())
       .then(data => {
         setJobs(data);
@@ -206,7 +206,7 @@ function ApplicationForm({ jobId = '', jobTitle = '', onComplete = () => { } }) 
     setError('');
 
     try {
-      const response = await fetch(`/api/applications`, {
+      const response = await fetch(`${import.meta.env.VITE_APP_SERVER_URI}/api/applications`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
