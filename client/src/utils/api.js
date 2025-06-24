@@ -46,7 +46,7 @@ const apiRequest = async (url, method = 'GET', data = null) => {
       options.body = JSON.stringify(data);
     }
     
-    const response = await fetch(${import.meta.env.VITE_APP_SERVER_URI}+url, options);
+    const response = await fetch(`${import.meta.env.VITE_APP_SERVER_URI}${url}`, options);
     
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
