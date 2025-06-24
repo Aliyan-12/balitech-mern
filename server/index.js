@@ -22,10 +22,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Middleware
-app.use(cors({
-  origin: process.env.CLIENT_URI ?? 'http://localhost:5173/',
-  credentials: true
-}));
+// app.use(cors({
+//   origin: process.env.CLIENT_URI ?? 'http://localhost:5173/',
+//   credentials: true
+// }));
+app.use(cors());
 app.use(cookieParser()); // Required for CSRF
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -75,11 +76,11 @@ app.use((err, req, res, next) => {
 });
 
 // Serve frontend in production
-if (process.env.NODE_ENV === 'production') {
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
-  });
-}
+// if (process.env.NODE_ENV === 'production') {
+//   app.get('*', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+//   });
+// }
 
 // Connect to MongoDB
 if (process.env.MONGODB_URI) {
