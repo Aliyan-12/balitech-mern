@@ -1,6 +1,7 @@
 import React from 'react';
 import { FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from 'react-icons/fa';
 import { IoMailOutline, IoPricetagsOutline } from 'react-icons/io5';
+import { SiTiktok } from 'react-icons/si';
 import Button from '../Button/Button';
 
 const Footer = () => {
@@ -32,16 +33,16 @@ const Footer = () => {
               Your trusted BPO partner for exceptional business solutions.
             </p>
             <div className="flex mt-6 space-x-4">
-              <a href="#" className="text-orange/60 hover:text-orange transition-colors">
+              <a href="https://www.facebook.com/Balitechpvt.ltd" target="_blank" className="text-orange/60 hover:text-orange transition-colors">
                 <FaFacebook size={20} />
               </a>
-              <a href="#" className="text-orange/60 hover:text-orange transition-colors">
-                <FaTwitter size={20} />
+              <a href="https://www.tiktok.com/@balitech.pvt.ltd" target='_blank' className="text-orange/60 hover:text-orange transition-colors">
+                <SiTiktok size={20} />
               </a>
-              <a href="#" className="text-orange/60 hover:text-orange transition-colors">
+              <a href="https://www.linkedin.com/company/bali-tech-pvt-ltd/posts/?feedView=all" target='_blank' className="text-orange/60 hover:text-orange transition-colors">
                 <FaLinkedin size={20} />
               </a>
-              <a href="#" className="text-orange/60 hover:text-orange transition-colors">
+              <a href="https://www.instagram.com/balitechpvt.ltd" target='_blank' className="text-orange/60 hover:text-orange transition-colors">
                 <FaInstagram size={20} />
               </a>
             </div>

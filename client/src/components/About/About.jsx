@@ -83,22 +83,22 @@ const About = () => {
                 <div className="relative w-full h-full overflow-hidden rounded-md">
                   <div className="absolute inset-0 bg-[#121f3d] flex items-center justify-center">
                     <img 
-                      src="https://images.unsplash.com/photo-1566125882500-87e10f726cdc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1374&q=80" 
+                      src="public/images/about-balitech.jpg" 
                       alt="Modern call center office" 
-                      className="w-full h-full object-cover opacity-70 mix-blend-overlay"
+                      className="w-full h-full object-cover"
                     />
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    {/* <div className="absolute inset-0 flex items-center justify-center">
                       <div className="font-bold text-4xl lg:text-5xl">
                         <span className="text-white">Bali</span>
                         <span className="text-orange">Tech</span>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>
             </div>
             <div className="absolute -bottom-6 -right-6 bg-orange/90 rounded-lg py-4 px-6 shadow-lg">
-              <p className="text-xl font-bold">Est. 2010</p>
+              <p className="text-xl font-bold">Est. 2021</p>
             </div>
           </motion.div>
 

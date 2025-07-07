@@ -70,8 +70,7 @@ function Careers() {
             </div>
           )}
 
-          <div className="mt-16 bg-[#0f172a] rounded-xl p-8 border border-gray-800 shadow-lg relative overflow-hidden">
-            {/* Decorative background */}
+          {/* <div className="mt-16 bg-[#0f172a] rounded-xl p-8 border border-gray-800 shadow-lg relative overflow-hidden">
             <div className="absolute top-0 right-0 w-64 h-64 bg-orange/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl"></div>
             <div className="absolute bottom-0 left-0 w-40 h-40 bg-blue-500/5 rounded-full translate-y-1/2 -translate-x-1/2 blur-3xl"></div>
 
@@ -83,7 +82,7 @@ function Careers() {
               </p>
               <ApplicationForm />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
